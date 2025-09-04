@@ -1,0 +1,92 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="container d-flex justify-content-center align-items-center min-vh-100">
+    <div class="card glass-card p-4 shadow-lg" style="max-width: 450px; width: 100%;">
+        <h2 class="text-center mb-4 text-light">Logged Out</h2>
+
+        <form method="post">
+            {% csrf_token %}
+            
+            <!-- Custom styled form fields -->
+            {% for field in form %}
+                <div class="form-group mb-3">
+                    {{ field.label_tag(attrs={'class':'text-light'}) }}
+                    {{ field|add_class:"form-control neon-input" }}
+                    {% if field.errors %}
+                        <div class="text-danger mt-1">{{ field.errors }}</div>
+                    {% endif %}
+                </div>
+            {% endfor %}
+            
+            <div class="d-flex justify-content-between mt-3">
+                <button type="submit" class="btn btn-success btn-glow-green">Register</button>
+                <a href="{% url 'login' %}" class="btn btn-danger btn-glow-red">Log In</a>
+            </div>
+        </form>
+
+        <p class="text-center text-light mt-3">
+            You have been logged out. <a href="{% url 'register' %}" class="text-info">Log in again!</a>
+        </p>
+    </div>
+</div>
+
+<style>
+/* Neon black glass card */
+.glass-card {
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(10px);
+    border-radius: 15px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Glowing buttons */
+.btn-glow-red {
+    background-color: #ff0033;
+    color: #fff;
+    border: none;
+    transition: 0.3s;
+}
+.btn-glow-red:hover {
+    box-shadow: 0 0 15px #ff0033, 0 0 30px #ff0033;
+}
+
+.btn-glow-green {
+    background-color: #00ff66;
+    color: #000;
+    border: none;
+    transition: 0.3s;
+}
+.btn-glow-green:hover {
+    box-shadow: 0 0 15px #00ff66, 0 0 30px #00ff66;
+}
+
+/* Neon form inputs */
+.neon-input {
+    background: rgba(0,0,0,0.3);
+    border: 1px solid #00ffcc;
+    border-radius: 8px;
+    color: #fff;
+    padding: 0.5rem 0.75rem;
+    outline: none;
+    transition: 0.3s;
+}
+.neon-input:focus {
+    border-color: #00ff66;
+    box-shadow: 0 0 10px #00ff66, 0 0 20px #00ff66 inset;
+    background: rgba(0,0,0,0.5);
+}
+
+/* Placeholder color */
+.neon-input::placeholder {
+    color: #00ffcc;
+}
+
+/* Responsive adjustments */
+@media (max-width: 576px) {
+    .glass-card {
+        padding: 2rem 1rem;
+    }
+}
+</style>
+{% endblock %}
